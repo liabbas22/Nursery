@@ -1,0 +1,97 @@
+import React from "react";
+import Title from "../component/Title";
+import { assets } from "../assets/assets";
+import NewsLetter from "../component/NewsLetter";
+import { motion } from "framer-motion";
+
+const About = () => {
+  return (
+    <div>
+      <div className="text-2xl text-center pt-8 border-t">
+        <Title text1={"ABOUT"} text2={"US"} />
+      </div>
+
+      <div className="my-10 flex flex-col md:flex-row gap-16">
+        {/* Left Image */}
+        <motion.img
+          src={assets.about_img}
+          alt="About Image"
+          className="w-full md:max-w-[450px]"
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        />
+
+        {/* Right Text */}
+        <motion.div
+          className="flex flex-col justify-center gap-6 md:w-2/4 text-gray-600"
+          initial={{ opacity: 0, x: 100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <p>
+            Forever was born out of a passion for innovation and a desire to
+            revolutionize the way people shop online. Our journey began with a
+            simple idea: to provide a platform where customers can easily
+            discover, explore, and purchase a wide range of products from the
+            comfort of their homes.
+          </p>
+          <p>
+            Since our inception, we've worked tirelessly to curate a diverse
+            selection of high-quality products that cater to every taste and
+            preference. From fashion and beauty to electronics and home
+            essentials, we offer an extensive collection sourced from trusted
+            brands and suppliers
+          </p>
+          <b className="text-gray-800">Our Mission</b>
+          <p>
+            Our mission at Forever is to empower customers with choice,
+            convenience, and confidence. We're dedicated to providing a seamless
+            shopping experience that exceeds expectations, from browsing and
+            ordering to delivery and beyond.
+          </p>
+        </motion.div>
+      </div>
+
+      <div className="text-3xl py-8">
+        <Title text1={"WHY"} text2={"CHOOSE US"} />
+      </div>
+
+      {/* Why Choose Us Boxes */}
+      <div className="flex flex-col md:flex-row items-center text-sm mb-20 gap-6">
+        {[
+          {
+            title: "Quality Assurance:",
+            desc: "We meticulously select and vet each product to ensure it meets our stringent quality standards.",
+          },
+          {
+            title: "Convenience:",
+            desc: "With our user-friendly interface and hassle-free ordering process, shopping has never been easier.",
+          },
+          {
+            title: "Exceptional Customer Service:",
+            desc: "Our team of dedicated professionals is here to assist you the way, ensuring your satisfaction is our top priority.",
+          },
+        ].map((item, idx) => (
+          <motion.div
+            key={idx}
+            className="border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: idx * 0.2 }}
+          >
+            <b>{item.title}</b>
+            <p className="text-gray-600">{item.desc}</p>
+          </motion.div>
+        ))}
+      </div>
+      <NewsLetter />
+
+    </div>
+  );
+};
+
+export default About;

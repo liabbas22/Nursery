@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Prata&family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a.active hr {
+  display: block;
+   background-color: #509c19;
+}
+* {
+  font-family: outfit;
+}
+.prata-regular {
+  font-family: "Prata", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+@media (max-width: 640px) {
+  a.active {
+    /* background-color: #245402 !important; */
+    color: #fff;
+  }
+}
+::-webkit-scrollbar {
+  display: none;
+}
+.swiper-pagination-bullet {
+  width: 10px !important;      
+  height: 10px !important;
+  background-color: #d1d5db; 
+  opacity: 1;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  width: 16px;       
+  height: 16px;
+  background-color: #16a34a !important;
+}
