@@ -14,7 +14,7 @@ const Add = ({ token }) => {
   const [name, setName] = useState("");
   const [descripition, setDescripition] = useState("");
   const [price, setPrice] = useState();
-  const [category, setCategory] = useState("Fruits");
+  const [category, setCategory] = useState("Cactus");
   const [bestseller, setBestSeller] = useState(false);
   const onSumbitHandler = async (e) => {
     e.preventDefault();
@@ -46,7 +46,7 @@ const Add = ({ token }) => {
         setName("");
         setDescripition("");
         setPrice("");
-        setCategory("Fruits");
+        setCategory("Cactus");
         setBestSeller(false);
         setImage1(false);
         setImage2(false);
@@ -150,9 +150,14 @@ const Add = ({ token }) => {
             className="w-full px-3 sm:py-[9px] py-2"
             onChange={(e) => setCategory(e.target.value)}
           >
-            <option value="Fruits">Fresh Fruits</option>
-            <option value="Flowers">New Flowers</option>
-            <option value="Vegetable">Vegetable Plants</option>
+            <option value="Cactus">Cactus</option>
+            <option value="Fruit">Fruit Plants</option>
+            <option value="Herbs">Herbs</option>
+            <option value="Imported">Imported Plants</option>
+            <option value="Tree">Tree Plant</option>
+            <option value="Creeper">Creeper</option>
+            <option value="Hanging">Hanging Plants</option>
+            <option value="Indoor">Indoor Plants</option>
           </select>
         </div>
         <div className="">

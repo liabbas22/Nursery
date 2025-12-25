@@ -33,34 +33,34 @@ const ShopContextProvider = ({ children }) => {
     }
   }, [token]);
 
- const addToCart = async (itemId, size = "default") => {
-  if (!itemId) return;
-  const cartData = structuredClone(cartItem) || {};
+  const addToCart = async (itemId, size = "default") => {
+    if (!itemId) return;
+    const cartData = structuredClone(cartItem) || {};
 
-  if (!cartData[itemId]) cartData[itemId] = {};
+    if (!cartData[itemId]) cartData[itemId] = {};
 
-  if (cartData[itemId][size]) {
-    cartData[itemId][size] += 1;
-  } else {
-    cartData[itemId][size] = 1;
-  }
+    if (cartData[itemId][size]) {
+      cartData[itemId][size] += 1;
+    } else {
+      cartData[itemId][size] = 1;
+    }
 
-  setCartItem(cartData);
-  toast.success("Added to cart");
+    setCartItem(cartData);
+    toast.success("Added to cart");
 
-  if (!token) return;
+    if (!token) return;
 
-  try {
-    await axios.post(
-      `${backendURL}/api/cart/add`,
-      { itemId, size },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-  } catch (error) {
-    console.error(error);
-    toast.error(error.response?.data?.message || error.message);
-  }
-};
+    try {
+      await axios.post(
+        `${backendURL}/api/cart/add`,
+        { itemId, size },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response?.data?.message || error.message);
+    }
+  };
 
 
 

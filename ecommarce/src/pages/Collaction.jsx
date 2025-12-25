@@ -72,9 +72,14 @@ const Collaction = () => {
 
         <div className={`border border-gray-300 pl-5 py-3 mt-6 ${showFilter ? "" : "hidden"} sm:block`}>
           <p className="mb-3 text-sm font-medium uppercase">Category</p>
-          <label className="flex gap-2"><input type="checkbox" value="Fruits" onChange={toggleCategories}/>Fresh Fruits</label>
-          <label className="flex gap-2"><input type="checkbox" value="Flowers" onChange={toggleCategories} />New Flowers</label>
-          <label className="flex gap-2"><input type="checkbox" value="Vegetable" onChange={toggleCategories} />Vegetable Plants</label>
+          <label className="flex gap-2"><input type="checkbox" value="Cactus" onChange={toggleCategories} />Cactus</label>
+          <label className="flex gap-2"><input type="checkbox" value="Fruit" onChange={toggleCategories} />Fruit Plants</label>
+          <label className="flex gap-2"><input type="checkbox" value="Herbs" onChange={toggleCategories} />Herbs</label>
+          <label className="flex gap-2"><input type="checkbox" value="Imported" onChange={toggleCategories} />Imported Plants</label>
+          <label className="flex gap-2"><input type="checkbox" value="Tree" onChange={toggleCategories} />Tree Plant</label>
+          <label className="flex gap-2"><input type="checkbox" value="Creeper" onChange={toggleCategories} />Creeper</label>
+          <label className="flex gap-2"><input type="checkbox" value="Hanging" onChange={toggleCategories} />Hanging Plants</label>
+          <label className="flex gap-2"><input type="checkbox" value="Indoor" onChange={toggleCategories} />Indoor Plants</label>
         </div>
 
       </div>
