@@ -94,7 +94,7 @@ const List = ({ token }) => {
             <p>{item.name}</p>
             <p>{item.category}</p>
             <p>
-              {currency}
+              {currency}{" "}
               {item.price}
             </p>
             <p

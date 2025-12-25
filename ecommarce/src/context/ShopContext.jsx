@@ -171,7 +171,7 @@ const ShopContextProvider = ({ children }) => {
     }
   };
 
-  const currency = "$";
+  const currency = "Rs";
   const delivery_Fee = 10;
   const backendURL = process.env.REACT_APP_BACKEND_URL;
 

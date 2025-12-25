@@ -11,7 +11,7 @@ import ContactJob from "./page/ContactJob.jsx";
 import AddHeroSection from "./page/AddHeroSection.jsx";
 import Herolist from "./page/Herolist.jsx";
 export const backendURL = process.env.REACT_APP_BACKEND_URL;
-export const currency = "$";
+export const currency = "Rs ";
 const App = () => {
   const [token, setToken] = useState(
     localStorage.getItem("token") ? localStorage.getItem("token") : ""

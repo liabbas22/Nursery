@@ -91,7 +91,7 @@ const Order = () => {
                   <div className="space-y-1 text-sm sm:text-base">
                     <p className="font-semibold text-gray-800">{item.name}</p>
                     <p className="text-gray-600">
-                      {currency}
+                      {currency}{" "}
                       {Number(item.price)} × {item.quantity}
                     </p>
                     <p className="text-gray-400 text-sm">

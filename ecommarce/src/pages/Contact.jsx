@@ -82,15 +82,15 @@ const Contact = () => {
           className="w-full md:w-[480px]"
           initial={{ opacity: 0, x: -100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} />
         <motion.div className="flex flex-col justify-center items-start gap-6" initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} >
-          <b className="text-gray-600 font-semibold text-2xl">Our Store</b>
+          <b className="text-gray-600 font-semibold text-2xl">Pure Plants</b>
           <p className="text-gray-500">
-            54709 Willms Station <br />
-            Suite 350, Washington, USA
+            Near Makli Civil Hospital <br />
+            Suite 350, Thatta, Pakistan
           </p>
 
           <p className="text-gray-500">
-            Tel: (415) 555-0132 <br />
-            Email:mystore@gmail.com
+            Tel: (+92) 3040635922 <br />
+            Email: pureplants@gmail.com
           </p>
 
           <b className="text-gray-600 font-semibold text-2xl">
@@ -186,15 +186,15 @@ const Contact = () => {
                 >
                   <option value="">Select a position</option>
                   <option value="ecommerce-manager">E-Commerce Manager</option>
-                  <option value="catalog-specialist">
-                    Product Catalog Specialist
-                  </option>
-                  <option value="customer-support">
-                    Customer Support Executive
-                  </option>
-                  <option value="digital-marketing">
-                    Digital Marketing Specialist
-                  </option>
+                  <option value="catalog-specialist">Product Catalog Specialist</option>
+                  <option value="customer-support">Customer Support Executive</option>
+                  <option value="digital-marketing">Digital Marketing Specialist</option>
+                  <option value="social-media-manager">Social Media Manager</option>
+                  <option value="seo-specialist">SEO Specialist</option>
+                  <option value="plant-care-specialist">Plant Care Specialist / Horticulturist</option>
+                  <option value="sales-executive">Sales Executive / Account Manager</option>
+                  <option value="graphic-designer">Graphic Designer</option>
+
                 </select>
               </div>
 

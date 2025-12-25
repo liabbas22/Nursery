@@ -32,25 +32,23 @@ const About = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <p>
-            Forever was born out of a passion for innovation and a desire to
-            revolutionize the way people shop online. Our journey began with a
-            simple idea: to provide a platform where customers can easily
-            discover, explore, and purchase a wide range of products from the
-            comfort of their homes.
+            Pure Plants Nursery was founded with a passion for greenery and a
+            desire to bring nature closer to your home and garden. Our journey
+            began with the goal of offering high-quality plants that are healthy,
+            vibrant, and easy to care for.
           </p>
           <p>
-            Since our inception, we've worked tirelessly to curate a diverse
-            selection of high-quality products that cater to every taste and
-            preference. From fashion and beauty to electronics and home
-            essentials, we offer an extensive collection sourced from trusted
-            brands and suppliers
+            We carefully source our plants from trusted growers, ensuring that
+            each one is nurtured and maintained to the highest standards.
+            Whether you're looking for indoor plants, fruit plants, herbs, or
+            trees, we provide a wide variety to suit every gardening enthusiast.
           </p>
           <b className="text-gray-800">Our Mission</b>
           <p>
-            Our mission at Forever is to empower customers with choice,
-            convenience, and confidence. We're dedicated to providing a seamless
-            shopping experience that exceeds expectations, from browsing and
-            ordering to delivery and beyond.
+            At Pure Plants Nursery, our mission is to make gardening accessible
+            and enjoyable for everyone. We aim to provide not only quality
+            plants but also guidance, tips, and inspiration to help you create
+            your perfect green space.
           </p>
         </motion.div>
       </div>
@@ -63,16 +61,16 @@ const About = () => {
       <div className="flex flex-col md:flex-row items-center text-sm mb-20 gap-6">
         {[
           {
-            title: "Quality Assurance:",
-            desc: "We meticulously select and vet each product to ensure it meets our stringent quality standards.",
+            title: "Healthy & Quality Plants:",
+            desc: "Every plant is carefully nurtured and hand-selected to ensure it thrives in your home or garden.",
           },
           {
-            title: "Convenience:",
-            desc: "With our user-friendly interface and hassle-free ordering process, shopping has never been easier.",
+            title: "Wide Variety:",
+            desc: "From indoor greenery and herbs to fruit plants and trees, we offer a diverse selection for every gardener.",
           },
           {
-            title: "Exceptional Customer Service:",
-            desc: "Our team of dedicated professionals is here to assist you the way, ensuring your satisfaction is our top priority.",
+            title: "Expert Guidance & Support:",
+            desc: "Our knowledgeable team is ready to assist you with planting tips, care instructions, and advice to help your plants flourish.",
           },
         ].map((item, idx) => (
           <motion.div
@@ -89,7 +87,6 @@ const About = () => {
         ))}
       </div>
       <NewsLetter />
-
     </div>
   );
 };
