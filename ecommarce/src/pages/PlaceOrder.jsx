@@ -79,7 +79,7 @@ const PlaceOrder = () => {
 
           if (responed.data.success) {
             setCartItem({});
-            toast.success("Payment Successfuly!");
+            toast.success("Order placed successfully. Pay on delivery.");
             navigate("/order");
           } else {
             toast.error(responed.error.message);
