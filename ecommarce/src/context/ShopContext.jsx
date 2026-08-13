@@ -218,7 +218,7 @@ useEffect(() => {
 
 
   const currency = "Rs";
-  const delivery_Fee = 10;
+  const delivery_Fee = 100;
 
 
   const value = {
