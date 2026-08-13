@@ -1,4 +1,3 @@
-import React from "react";
 import { assets } from "../assets/assets";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -14,9 +13,9 @@ const Footer = () => {
       <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10">
         <div>
           <Link to={"/"}>
-            <img src={assets.logo} alt="logo" className=" w-24" />
+            <img src={assets.logo} alt="logo" className="w-24 " />
           </Link>
-          <p className="w-full md:w-2/3 text-gray-600">
+          <p className="w-full text-gray-600 md:w-2/3">
             Bringing you the healthiest plants, premium gardening supplies,
             and a nurturing shopping experience. Loved by plant enthusiasts
             everywhere — shop with confidence and grow your green paradise.
@@ -24,7 +23,7 @@ const Footer = () => {
         </div>
 
         <div>
-          <p className="text-xl font-medium mb-5">Company</p>
+          <p className="mb-5 text-xl font-medium">Company</p>
           <ul className="flex flex-col gap-1 text-gray-600">
             <li>
               <Link to={"/"}>Home</Link>
@@ -42,7 +41,7 @@ const Footer = () => {
         </div>
 
         <div>
-          <p className="text-xl font-medium mb-5">Get in Touch</p>
+          <p className="mb-5 text-xl font-medium">Get in Touch</p>
           <ul className="flex flex-col gap-1 text-gray-600">
             <li>+923149283153</li>
             <li>aa1639987@gmail.com</li>
@@ -52,7 +51,7 @@ const Footer = () => {
       </div>
 
       <hr className="border-gray-300" />
-      <p className="py-5 text-center text-gray-600 text-xs sm:text-sm">
+      <p className="py-5 text-xs text-center text-gray-600 sm:text-sm">
         © 2025 Pure plants.com – All Rights Reserved.
       </p>
     </motion.div>

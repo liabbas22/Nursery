@@ -35,42 +35,7 @@ const PlaceOrder = () => {
 
     setFormData((data) => ({ ...data, [name]: value }));
   };
-  const initPay = async (order) => {
-    const options = {
-      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-      amount: order.amount,
-      currrency: order.currency,
-      name: "Order Payment",
-      descripition: "Order Payment",
-      order_id: order.id,
-      receipt: order.receipt,
-      handler: async (responed) => {
-        console.log(responed);
-        try {
-          const { data } = await axios.post(
-            backendURL + "/api/order/verifyRazorpay",
-            { responed },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
 
-          if (data.success) {
-            navigate("/order");
-            setCartItem({});
-          } else {
-          }
-        } catch (error) {
-          console.log(error);
-          toast.error(error.message);
-        }
-      },
-    };
-    const rzp = new window.Razorpay(options);
-    rzp.open();
-  };
   const onSumbitHandler = async (e) => {
     e.preventDefault();
     if (!token) {
@@ -138,24 +103,7 @@ const PlaceOrder = () => {
             toast.error(responseStripe.data.message);
           }
           break;
-        case "razorpay":
-          toast.warning(
-            "The selected payment method is currently unavailable. Please choose another."
-          );
 
-          const responedRazorpay = await axios.post(
-            backendURL + "/api/order/razorpay",
-            { orderData },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          if (responedRazorpay.data.success) {
-            initPay(responedRazorpay.data.order);
-          }
-          break;
         default:
           break;
       }
@@ -172,7 +120,7 @@ const PlaceOrder = () => {
     >
       {/* -----------------Left Side---------------------------- */}
       <div className="flex flex-col gap-4 w-full sm:max-w-[480px]">
-        <div className="text-xl sm:text-2xl my-3">
+        <div className="my-3 text-xl sm:text-2xl">
           <Title text1={"DELIVERY"} text2={"INFORMATION"} />
         </div>
         <div className="flex gap-3">
@@ -270,9 +218,9 @@ const PlaceOrder = () => {
         </div>
         <div className="mt-12 text-xl">
           <Title text1={"PAYMENT"} text2={"METHOD"} />
-          <div className="flex gap-3 flex-col lg:flex-row">
+          <div className="flex flex-col gap-3 lg:flex-row">
             <div
-              className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
+              className="flex items-center gap-3 p-2 px-3 border cursor-pointer"
               onClick={() => setMetod("stripe")}
             >
               <p
@@ -286,35 +234,21 @@ const PlaceOrder = () => {
               />
             </div>
             <div
-              className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
-              onClick={() => setMetod("razorpay")} //After Solve Razorpay Payment Method
-            >
-              <p
-                className={`min-w-3.5 h-3.5 border rounded-full ${method === "razorpay" ? "bg-green-400" : ""
-                  }`}
-              ></p>
-              <img
-                src={assets.razorpay_logo}
-                alt="strapi logo"
-                className="h-5 mx-4"
-              />
-            </div>
-            <div
-              className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
+              className="flex items-center gap-3 p-2 px-3 border cursor-pointer"
               onClick={() => setMetod("cod")}
             >
               <p
                 className={`min-w-3.5 h-3.5 border rounded-full  ${method === "cod" ? "bg-green-400" : ""
                   }`}
               ></p>
-              <p className="uppercase text-gray-500 text-sm font-medium mx-4">
+              <p className="mx-4 text-sm font-medium text-gray-500 uppercase">
                 Cash on Delivery
               </p>
             </div>
           </div>
-          <div className="w-full text-end mt-8">
+          <div className="w-full mt-8 text-end">
             <button
-              className="bg-black text-white px-16 py-3 text-sm active:bg-gray-900"
+              className="px-16 py-3 text-sm text-white bg-black active:bg-gray-900"
               type="sumbit"
             >
               Place Order

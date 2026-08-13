@@ -1,34 +1,37 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
-import Releated_Product from "../component/Releated_Product";
+import RelatedProduct  from "../component/Releated_Product";
 
 const Product = () => {
   const { productId } = useParams();
   const { products, currency, addToCart } = useContext(ShopContext);
   const [productData, setProductData] = useState(null);
   const [Image, setImage] = useState(null);
+const fetchProductData = useCallback(() => {
+  const foundProduct = products.find(
+    (item) => item._id === productId
+  );
 
-  const fetchProductData = async () => {
-    const foundProduct = products.find((item) => item._id === productId);
-    if (foundProduct) {
-      setProductData(foundProduct);
-      setImage(foundProduct.images[0]);
-    }
-  };
+  if (foundProduct) {
+    setProductData(foundProduct);
+    setImage(foundProduct.images?.[0] || "");
+  }
+}, [products, productId]);
 
-  useEffect(() => {
-    fetchProductData();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, [productId, products]);
+useEffect(() => {
+  fetchProductData();
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}, [fetchProductData]);
   return productData ? (
-    <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
+    <div className="pt-10 transition-opacity duration-500 ease-in border-t-2 opacity-100">
       <div className="flex flex-col gap-12 sm:flex-row">
-        <div className="flex flex-1 flex-col-reverse gap-3 sm:flex-row">
+        <div className="flex flex-col-reverse flex-1 gap-3 sm:flex-row">
           <div
             className="flex sm:flex-col overflow-x-auto sm:overflow-y-scroll
            justify-between sm:justify-normal w-full  sm:w-[18.7%]"
@@ -36,7 +39,7 @@ const Product = () => {
             {productData.images?.map((image, index) => (
               <img
                 src={image}
-                alt="Prodcut Image"
+                alt="Prodcut_Image"
                 key={index}
                 className="w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer"
                 onClick={() => setImage(image)}
@@ -44,11 +47,11 @@ const Product = () => {
             ))}
           </div>
           <div className="w-full sm:w-[80%]">
-            <img src={Image} alt="Product image" className="w-full h-auto" />
+            <img src={Image} alt="Product_image" className="w-full h-auto" />
           </div>
         </div>
         <div className="flex-1">
-          <h1 className="font-medium text-2xl mb-2">{productData.name}</h1>
+          <h1 className="mb-2 text-2xl font-medium">{productData.name}</h1>
           <div className="flex items-center gap-1 mt-2">
             <img src={assets.star_icon} alt="star-icon" className="w-3.5" />
             <img src={assets.star_icon} alt="star-icon" className="w-3.5" />
@@ -68,13 +71,13 @@ const Product = () => {
             {productData.description}
           </p>
           <button
-            className="uppercase bg-green-700 hover:bg-green-600 text-white px-8 py-3 text-sm active:bg-gray-700 "
+            className="px-8 py-3 text-sm text-white uppercase bg-green-700 hover:bg-green-600 active:bg-gray-700 "
             onClick={() => addToCart(productData._id)}
           >
             Add To Cart
           </button>
           <hr className="mt-8 sm:w-4/5" />
-          <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
+          <div className="flex flex-col gap-1 mt-5 text-sm text-gray-500">
             <p>100% Original product.</p>
             <p>Cash on delivery is available on this product.</p>
             <p>Easy return and exchange policy within 7 days.</p>
@@ -84,11 +87,11 @@ const Product = () => {
       {/* ----------Descripition-------------- */}
       <div className="mt-20">
         <div className="flex">
-          <b className="border px-5 py-3">Descripition</b>
-          <p className="border px-5 py-3">Review(122)</p>
+          <b className="px-5 py-3 border">Descripition</b>
+          <p className="px-5 py-3 border">Review(122)</p>
         </div>
       </div>
-      <div className="flex flex-col gap-4 border px-6 py-6 text-sm text-gray-500">
+      <div className="flex flex-col gap-4 px-6 py-6 text-sm text-gray-500 border">
         <p>
           An e-commerce website is an online platform that facilitates the
           buying and selling of products or services over the internet. It
@@ -108,7 +111,7 @@ const Product = () => {
 
       {/* -----------------Releated Product-------------------------------------------------- */}
       {productData && (
-        <Releated_Product
+        <RelatedProduct 
           category={productData.category}
           subCategory={productData.subCategory}
         />
@@ -116,7 +119,7 @@ const Product = () => {
 
     </div>
   ) : (
-    <div className="opacity-0"></div>
+    <div className="opacity-0"></div> 
   );
 };
 

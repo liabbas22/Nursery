@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { ShopContext } from "../context/ShopContext";
@@ -15,27 +15,29 @@ const HeroSectionSlider = () => {
   const [banner, setBanner] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchBannerData = async () => {
-    try {
-      setLoading(true);
-      const res = await axios.get(`${backendURL}/api/hero`);
-      setBanner(res?.data?.data || []);
-    } catch (error) {
-      toast.error(error?.response?.data?.message || "Error fetching banner");
-    } finally {
-      setLoading(false);
-    }
-  };
-  console.log("Res", banner);
+const fetchBannerData = useCallback(async () => {
+  try {
+    setLoading(true);
 
-  useEffect(() => {
-    fetchBannerData();
-  }, []);
+    const res = await axios.get(`${backendURL}/api/hero`);
+    setBanner(res?.data?.data || []);
+  } catch (error) {
+    toast.error(
+      error?.response?.data?.message || "Error fetching banner"
+    );
+  } finally {
+    setLoading(false);
+  }
+}, [backendURL]);
+
+useEffect(() => {
+  fetchBannerData();
+}, [fetchBannerData]);
 
   if (loading) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
-        <div className="w-10 h-10 border-4 border-blue-900 border-t-white rounded-full animate-spin"></div>
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
+        <div className="w-10 h-10 border-4 border-blue-900 rounded-full border-t-white animate-spin"></div>
       </div>
     );
   }
@@ -50,11 +52,11 @@ const HeroSectionSlider = () => {
       loop
       autoplay={{ delay: 5000, disableOnInteraction: false }}
       pagination={{ clickable: true }}
-      className="w-full relative z-0"
+      className="relative z-0 w-full"
     >
       {banner.slice(0, 7).map((slide, index) => (
         <SwiperSlide key={index}>
-          <div className="flex flex-col-reverse sm:flex-row items-center border border-gray-400">
+          <div className="flex flex-col-reverse items-center border border-gray-400 sm:flex-row">
 
             <motion.div
               className="w-full sm:w-1/2 flex flex-col items-center justify-center py-10 sm:py-0 text-[#414141] space-y-4 px-4"
@@ -63,12 +65,12 @@ const HeroSectionSlider = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               <p className="w-8 md:w-11 h-[1.5px] bg-green-700"></p>
-              <p className="font-medium text-sm md:text-base uppercase text-center ">
+              <p className="text-sm font-medium text-center uppercase md:text-base ">
                 {slide.subtitle}
               </p>
 
               <motion.h1
-                className="text-3xl lg:text-5xl leading-relaxed sm:py-3 text-center capitalize"
+                className="text-3xl leading-relaxed text-center capitalize lg:text-5xl sm:py-3"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
@@ -78,12 +80,12 @@ const HeroSectionSlider = () => {
 
               <Link to="/collection">
                 <motion.div
-                  className="flex items-center gap-2 group cursor-pointer"
+                  className="flex items-center gap-2 cursor-pointer group"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
                 >
-                  <p className="font-semibold text-sm md:text-base hover:text-green-700 transition-all duration-300">
+                  <p className="text-sm font-semibold transition-all duration-300 md:text-base hover:text-green-700">
                     Shop Now
                   </p>
                   <p className="w-8 md:w-11 h-[1.5px] bg-green-700 transition-all duration-300 group-hover:w-16 md:group-hover:w-20"></p>

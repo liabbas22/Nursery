@@ -1,42 +1,55 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { backendURL, currency } from "../App";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { assets } from "../assets/assets";
 import { MdDeleteOutline } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 
 const Order = ({ token, setToken }) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [updatingId, setUpdatingId] = useState(null);
-  const Navigate = useNavigate();
-  const fetchAllOrders = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.post(
-        `${backendURL}/api/order/list`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
 
-      if (response.data.success) {
-        setOrders(response.data.orders.reverse());
-      } else {
-        toast.error(response.data.message || "Could not fetch orders.");
+
+const fetchAllOrders = useCallback(async () => {
+  if (!token) return;
+
+  setLoading(true);
+
+  try {
+    const response = await axios.post(
+      `${backendURL}/api/order/list`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-      toast.error("Failed to fetch orders");
-    } finally {
-      setLoading(false);
+    );
+
+    if (response.data.success) {
+      setOrders([...(response.data.orders || [])].reverse());
+    } else {
+      toast.error(
+        response.data.message || "Could not fetch orders."
+      );
     }
-  };
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+
+    toast.error(
+      error?.response?.data?.message ||
+        error?.message ||
+        "Failed to fetch orders"
+    );
+  } finally {
+    setLoading(false);
+  }
+}, [token]);
+
+useEffect(() => {
+  fetchAllOrders();
+}, [fetchAllOrders]);
 
   const statusHandler = async (event, orderId) => {
     const newStatus = event.target.value;
@@ -92,17 +105,15 @@ const Order = ({ token, setToken }) => {
               toast.error(message);
               console.error("Error deleting order:", message);
             }
-          }} className="bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-500">Yes</button>
-          <button onClick={() => toast.dismiss()} className="bg-gray-300  text-white px-3 py-1 rounded-md hover:bg-gray-400">No</button>
+          }} className="px-3 py-1 text-white bg-red-600 rounded-md hover:bg-red-500">Yes</button>
+          <button onClick={() => toast.dismiss()} className="px-3 py-1 text-white bg-gray-300 rounded-md hover:bg-gray-400">No</button>
         </div>
       </div>, { autoClose: false }
     )
 
   };
 
-  useEffect(() => {
-    if (token) fetchAllOrders();
-  }, [token]);
+
 
   console.log("token",token);
 // Extra Code 401 || 403
@@ -119,7 +130,7 @@ const Order = ({ token, setToken }) => {
       <h3>Order Page</h3>
       {loading ? (
         <div className="fixed inset-0 flex items-center justify-center bg-transparent">
-          <div className="w-10 h-10 border-4 border-blue-900 border-t-white rounded-full animate-spin"></div>
+          <div className="w-10 h-10 border-4 border-blue-900 rounded-full border-t-white animate-spin"></div>
         </div>
       ) : orders.length === 0 ? (
         <p>No orders found.</p>
@@ -187,17 +198,7 @@ const Order = ({ token, setToken }) => {
             </select>
             <button
               onClick={() => handleOrderDelete(order._id)}
-              className="
-    absolute top-6 sm:top-auto sm:bottom-6 right-8
-    flex items-center justify-center
-    w-10 h-10
-    border-2 border-gray-600
-    rounded-full
-    bg-gray-50 text-gray-600
-    hover:bg-gray-200 hover:text-gray-700
-    transition-colors duration-300 ease-in-out
-    focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-1
-  "
+              className="absolute flex items-center justify-center w-10 h-10 text-gray-600 transition-colors duration-300 ease-in-out border-2 border-gray-600 rounded-full top-6 sm:top-auto sm:bottom-6 right-8 bg-gray-50 hover:bg-gray-200 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-1"
               aria-label="Delete Order"
             >
               <MdDeleteOutline className="text-2xl" />

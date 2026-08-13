@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Login from "../component/Login";
 import { assets } from "../assets/assets";
 import axios from "axios";
 import { backendURL } from "../App";
@@ -142,7 +141,7 @@ const Add = ({ token }) => {
           value={descripition}
         />
       </div>
-      <div className="flex flex-col sm:flex-row  w-full gap-2  sm:gap-8">
+      <div className="flex flex-col w-full gap-2 sm:flex-row sm:gap-8">
         <div className="">
           <p className="mb-2">Product Category</p>
           <select
@@ -172,7 +171,7 @@ const Add = ({ token }) => {
           />
         </div>
       </div>
-      <div className="flex gap-2 items-center mt-2">
+      <div className="flex items-center gap-2 mt-2">
         <input
           type="checkbox"
           id="bestseller"
@@ -186,7 +185,7 @@ const Add = ({ token }) => {
       </div>
       <button
         type="sumbit"
-        className="w-28 py-3 mt-4 bg-green-700 text-white active:bg-green-900 rounded-md uppercase"
+        className="py-3 mt-4 text-white uppercase bg-green-700 rounded-md w-28 active:bg-green-900"
       >
         Add
       </button>

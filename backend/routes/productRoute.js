@@ -5,14 +5,14 @@ import {
   removeProduct,
   singleProduct,
 } from "../controllers/productController.js";
-import uplaod from "../middleware/multer.js";
+import upload from "../middleware/multer.js";
 import adminAuth from "../models/adminAuth.js";
 
 const productRouter = express.Router();
 productRouter.post(
   "/add",
   adminAuth,
-  uplaod.fields([
+  upload.fields([
     { name: "image1", maxCount: 1 },
     { name: "image2", maxCount: 1 },
     { name: "image3", maxCount: 1 },

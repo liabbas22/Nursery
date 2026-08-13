@@ -7,11 +7,11 @@ import { motion } from "framer-motion";
 const About = () => {
   return (
     <div>
-      <div className="text-2xl text-center pt-8 border-t">
+      <div className="pt-8 text-2xl text-center border-t">
         <Title text1={"ABOUT"} text2={"US"} />
       </div>
 
-      <div className="my-10 flex flex-col md:flex-row gap-16">
+      <div className="flex flex-col gap-16 my-10 md:flex-row">
         {/* Left Image */}
         <motion.img
           src={assets.about_img}
@@ -25,7 +25,7 @@ const About = () => {
 
         {/* Right Text */}
         <motion.div
-          className="flex flex-col justify-center gap-6 md:w-2/4 text-gray-600"
+          className="flex flex-col justify-center gap-6 text-gray-600 md:w-2/4"
           initial={{ opacity: 0, x: 100 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -53,12 +53,12 @@ const About = () => {
         </motion.div>
       </div>
 
-      <div className="text-3xl py-8">
+      <div className="py-8 text-3xl">
         <Title text1={"WHY"} text2={"CHOOSE US"} />
       </div>
 
       {/* Why Choose Us Boxes */}
-      <div className="flex flex-col md:flex-row items-center text-sm mb-20 gap-6">
+      <div className="flex flex-col items-center gap-6 mb-20 text-sm md:flex-row">
         {[
           {
             title: "Healthy & Quality Plants:",
@@ -75,7 +75,7 @@ const About = () => {
         ].map((item, idx) => (
           <motion.div
             key={idx}
-            className="border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5"
+            className="flex flex-col gap-5 px-10 py-8 border md:px-16 sm:py-20"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

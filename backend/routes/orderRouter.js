@@ -1,13 +1,10 @@
-import express, { Router } from "express";
+  import express, { Router } from "express";
 import {
   placeOrder,
   placeOrderStripe,
-  placeOrderRozorPay,
-  allOrders,
   userOrders,
   updateStatus,
   verifyStripe,
-  verifyRazorPay,
 } from "../controllers/orderContoller.js";
 import adminAuth from "../models/adminAuth.js";
 import authUser from "../middleware/Auth.js";
@@ -32,7 +29,6 @@ orderRouter.post("/status", adminAuth, updateStatus);
 // User: Place orders
 orderRouter.post("/place", authUser, placeOrder);
 orderRouter.post("/stripe", authUser, placeOrderStripe);
-orderRouter.post("/razorpay", authUser, placeOrderRozorPay);
 
 // User: Get their own orders
 orderRouter.post("/userorders", authUser, userOrders);
@@ -40,8 +36,6 @@ orderRouter.post("/userorders", authUser, userOrders);
 // verfiy Strepi
 orderRouter.post("/verifyStripe", authUser, verifyStripe);
 
-// verfiy RazorPay
-orderRouter.post("/verifyRazorpay", authUser, verifyRazorPay);
 
 orderRouter.delete('/:id', async (req, res) => {
   const { id } = req.params;

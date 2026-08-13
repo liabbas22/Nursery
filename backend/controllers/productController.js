@@ -1,5 +1,29 @@
 import { v2 as cloudinary } from "cloudinary";
+import streamifier from "streamifier";
 import productModel from "../models/productModel.js";
+
+const uploadToCloudinary = (fileBuffer) => {
+  return new Promise((resolve, reject) => {
+    const uploadStream =
+      cloudinary.uploader.upload_stream(
+        {
+          resource_type: "image",
+          folder: "products",
+        },
+        (error, result) => {
+          if (error) {
+            return reject(error);
+          }
+
+          resolve(result);
+        }
+      );
+
+    streamifier
+      .createReadStream(fileBuffer)
+      .pipe(uploadStream);
+  });
+};
 
 const addProduct = async (req, res) => {
   try {
@@ -19,14 +43,16 @@ const addProduct = async (req, res) => {
     const images = [image1, image2, image3, image4].filter(
       (item) => item !== undefined
     );
-    const imagesUrl = await Promise.all(
-      images.map(async (item) => {
-        const result = await cloudinary.uploader.upload(item.path, {
-          resource_type: "image",
-        });
-        return result.secure_url;
-      })
+    
+const imagesUrl = await Promise.all(
+  images.map(async (item) => {
+    const result = await uploadToCloudinary(
+      item.buffer
     );
+
+    return result.secure_url;
+  })
+);
 
     const productData = {
       name,

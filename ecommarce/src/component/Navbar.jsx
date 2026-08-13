@@ -36,7 +36,7 @@ const Navbar = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [setScroll]);
 
   return (
     <div
@@ -51,12 +51,12 @@ const Navbar = () => {
         <img src={logo} alt="" className="w-16 sm:w-20 cursor-pointer outline-none mt-[-3px]" />
       </Link>
 
-      <ul className="hidden sm:flex gap-5 items-center text-md text-gray-700">
+      <ul className="items-center hidden gap-5 text-gray-700 sm:flex text-md">
         {["Home", "Collection", "About", "Contact"].map((item) => (
           <NavLink
             key={item}
             to={`/${item === "Home" ? "" : item.toLowerCase()}`}
-            className="flex flex-col gap-1 items-center"
+            className="flex flex-col items-center gap-1"
           >
             <p>{item}</p>
             <hr className="w-2/3 border-none h-[1.5px] bg-gray-700 hidden" />
@@ -101,7 +101,7 @@ const Navbar = () => {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
-                <div className="flex flex-col gap-2 py-3 px-5">
+                <div className="flex flex-col gap-2 px-5 py-3">
                   <p
                     className="cursor-pointer hover:text-black"
                     onClick={() => navigate("/order")}
@@ -142,7 +142,7 @@ const Navbar = () => {
         >
           <div className="flex flex-col text-gray-600">
             <div
-              className="flex items-center gap-2 p-3 cursor-pointer text-sm"
+              className="flex items-center gap-2 p-3 text-sm cursor-pointer"
               onClick={() => setVisible(false)}
             >
               <img
@@ -155,7 +155,7 @@ const Navbar = () => {
             {["Home", "Collection", "About", "Contact"].map((item) => (
               <NavLink
                 key={item}
-                className="py-3 pl-6 border uppercase"
+                className="py-3 pl-6 uppercase border"
                 to={`/${item === "Home" ? "" : item.toLowerCase()}`}
                 onClick={() => setVisible(false)}
               >

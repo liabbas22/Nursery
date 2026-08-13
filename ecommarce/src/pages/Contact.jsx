@@ -3,12 +3,10 @@ import Title from "../component/Title";
 import NewsLetter from "../component/NewsLetter";
 import { assets } from "../assets/assets";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Contact = () => {
-  const navgate = useNavigate();
   const [job, setJob] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
@@ -70,19 +68,19 @@ const Contact = () => {
 
   return (
     <div>
-      <div className="text-2xl pt-10 pb-5 border-t text-center">
+      <div className="pt-10 pb-5 text-2xl text-center border-t">
         <Title text1={"CONTACT"} text2={"US"} />
       </div>
 
-      <motion.div className="flex flex-col gap-10 md:flex-row my-10 justify-center mb-28"
+      <motion.div className="flex flex-col justify-center gap-10 my-10 md:flex-row mb-28"
       >
         <motion.img
           src={assets.contact_img}
           alt="Contact Image"
           className="w-full md:w-[480px]"
           initial={{ opacity: 0, x: -100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} />
-        <motion.div className="flex flex-col justify-center items-start gap-6" initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} >
-          <b className="text-gray-600 font-semibold text-2xl">Pure Plants</b>
+        <motion.div className="flex flex-col items-start justify-center gap-6" initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} >
+          <b className="text-2xl font-semibold text-gray-600">Pure Plants</b>
           <p className="text-gray-500">
             Near Makli Civil Hospital <br />
             Suite 350, Thatta, Pakistan
@@ -93,7 +91,7 @@ const Contact = () => {
             Email: pureplants@gmail.com
           </p>
 
-          <b className="text-gray-600 font-semibold text-2xl">
+          <b className="text-2xl font-semibold text-gray-600">
             Careers at Forever
           </b>
           <p className="text-gray-500">
@@ -117,16 +115,16 @@ const Contact = () => {
             exit={{ opacity: 0, y: -50 }}
             transition={{ duration: 0.5 }}
             onSubmit={handleSubmit}
-            className="bg-white p-8 rounded-2xl shadow-lg max-w-2xl mx-auto border border-gray-200 mb-10"
+            className="max-w-2xl p-8 mx-auto mb-10 bg-white border border-gray-200 shadow-lg rounded-2xl"
           >
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
+            <h2 className="mb-6 text-2xl font-semibold text-center text-gray-800">
               Job Application Form
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {/* Full Name */}
               <div className="flex flex-col gap-2">
-                <label className="font-medium text-gray-700 font-sans">
+                <label className="font-sans font-medium text-gray-700">
                   Full Name
                 </label>
                 <input
@@ -142,7 +140,7 @@ const Contact = () => {
 
               {/* Email */}
               <div className="flex flex-col gap-2">
-                <label className="font-medium text-gray-700 font-sans">
+                <label className="font-sans font-medium text-gray-700">
                   Email Address
                 </label>
                 <input
@@ -158,7 +156,7 @@ const Contact = () => {
 
               {/* Phone */}
               <div className="flex flex-col gap-2">
-                <label className="font-medium text-gray-700 font-sans">
+                <label className="font-sans font-medium text-gray-700">
                   Phone Number
                 </label>
                 <input
@@ -174,7 +172,7 @@ const Contact = () => {
 
               {/* Position */}
               <div className="flex flex-col gap-2">
-                <label className="font-medium text-gray-700 font-sans">
+                <label className="font-sans font-medium text-gray-700">
                   Position Applying For
                 </label>
                 <select
@@ -200,7 +198,7 @@ const Contact = () => {
 
               {/* Resume */}
               <div className="flex flex-col gap-2 md:col-span-2">
-                <label className="font-medium text-gray-700 font-sans">
+                <label className="font-sans font-medium text-gray-700">
                   Upload Resume
                 </label>
                 <input
@@ -209,14 +207,14 @@ const Contact = () => {
                   ref={fileInputRef}
                   onChange={handleFileChange}
                   required
-                  className="border rounded-lg px-4 py-3 bg-gray-50 focus:ring-2 focus:ring-green-500 outline-none"
+                  className="px-4 py-3 border rounded-lg outline-none bg-gray-50 focus:ring-2 focus:ring-green-500"
                 />
               </div>
 
               <div className="md:col-span-2">
                 <button
                   type="submit"
-                  className="w-full bg-green-600 text-white py-3 rounded-lg text-lg font-medium hover:bg-green-700 transition shadow-md"
+                  className="w-full py-3 text-lg font-medium text-white transition bg-green-600 rounded-lg shadow-md hover:bg-green-700"
                 >
                   Submit Application
                 </button>

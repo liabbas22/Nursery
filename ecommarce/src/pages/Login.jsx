@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 
 const Login = () => {
   
@@ -56,13 +56,13 @@ const Login = () => {
       navigate("/");
     } else {
     }
-  }, [token]);
+  }, [token,navigate]);
   return (
     <form
       className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-800"
       onSubmit={onHandleSumbit}
     >
-      <div className="inline-flex items-center gap-2 mb-2 mt-10">
+      <div className="inline-flex items-center gap-2 mt-10 mb-2">
         <p className="text-3xl prata-regular">{currentState}</p>
         <hr className="border-none h-[1.5px] w-8 bg-gray-800" />
       </div>
@@ -71,7 +71,7 @@ const Login = () => {
       ) : (
         <input
           type="text"
-          className="w-full px-3 rounded-sm py-2 border border-gray-600 "
+          className="w-full px-3 py-2 border border-gray-600 rounded-sm "
           placeholder="Name"
           required
           onChange={(e) => setName(e.target.value)}
@@ -81,7 +81,7 @@ const Login = () => {
 
       <input
         type="email"
-        className="w-full px-3 rounded-sm py-2 border border-gray-600 "
+        className="w-full px-3 py-2 border border-gray-600 rounded-sm "
         placeholder="Email"
         required
         onChange={(e) => setEmail(e.target.value)}
@@ -89,7 +89,7 @@ const Login = () => {
       />
       <input
         type="password"
-        className="w-full px-3 rounded-sm py-2 border border-gray-600 "
+        className="w-full px-3 py-2 border border-gray-600 rounded-sm "
         placeholder="Password"
         required
         onChange={(e) => setPasseord(e.target.value)}
@@ -114,7 +114,7 @@ const Login = () => {
         )}
       </div>
       <button
-        className="bg-black text-white font-light px-8 py-2 mt-4 rounded-sm"
+        className="px-8 py-2 mt-4 font-light text-white bg-black rounded-sm"
         type="submit"
       >
         {currentState === "Login" ? "Sign In" : "Sign Up"}

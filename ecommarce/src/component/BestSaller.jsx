@@ -32,21 +32,19 @@ const BestSaller = () => {
 
   return (
     <div className="my-10">
-      {/* Title */}
       <motion.div
-        className="text-center py-8 text-2xl md:text-3xl"
+        className="py-8 text-2xl text-center md:text-3xl"
         initial={{ opacity: 0, x: 100 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 1, ease: "easeOut" }}
       >
         <Title text1="BEST" text2="SELLERS" />
-        <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-700">
+        <p className="w-3/4 m-auto text-xs text-gray-700 sm:text-sm md:text-base">
           Discover our most-loved plants and gardening essentials, cherished by plant enthusiasts for their quality, beauty, and easy care.
         </p>
       </motion.div>
 
-      {/* Products */}
       {bestSeller.length > 0 && (
         <Swiper {...swiperConfig}>
           {bestSeller.map((product, index) => (

@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import stripe from "../utils/stripe.js";
-// import razorpayInstance from "../utils/razorpay.js";
 
-const currency = "usd";
-const deliveryCharge = 10;
+
+const currency = "pkr";
+const deliveryCharge = 100;
 // ----------------------
 // Place Order - Cash on Delivery
 // ----------------------
@@ -69,13 +69,24 @@ const placeOrderStripe = async (req, res) => {
       quantity: 1,
     });
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items,
-      mode: "payment",
-      success_url: `${origin}/verify?success=true&orderId=${newOrder._id}`,
-      cancel_url: `${origin}/verify?success=false&orderId=${newOrder._id}`,
-    });
+const frontendURL = process.env.FRONTEND_URL || origin;
+
+const session = await stripe.checkout.sessions.create({
+  payment_method_types: ["card"],
+  line_items,
+  mode: "payment",
+
+  metadata: {
+    orderId: newOrder._id.toString(),
+    userId: userId.toString(),
+  },
+
+  success_url:
+    `${frontendURL}/verify?session_id={CHECKOUT_SESSION_ID}`,
+
+  cancel_url:
+    `${frontendURL}/verify?success=false&orderId=${newOrder._id}`,
+});
 
     res.json({ success: true, session_url: session.url });
   } catch (error) {
@@ -88,75 +99,103 @@ const placeOrderStripe = async (req, res) => {
 // Verify Stripe
 // ----------------------
 const verifyStripe = async (req, res) => {
-  const { orderId, success, userId } = req.body;
   try {
-    if (success === "true") {
-      await orderModel.findByIdAndUpdate(orderId, { payment: true });
-      await orderModel.findByIdAndUpdate(userId, { cartData: {} });
-      res.json({ success: true });
-    } else {
-      await orderModel.findByIdAndDelete(orderId);
-      res.json({ success: false });
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
-
-// ----------------------
-// Place Order - Razorpay
-// ----------------------
-const placeOrderRozorPay = async (req, res) => {
-  try {
-    const { userId, items, amount, address } = req.body;
-    const orderData = {
+    const {
+      sessionId,
+      orderId,
+      success,
       userId,
-      items,
-      amount: Number(amount),
-      address,
-      paymentMethod: "Razorpay",
-      payment: false,
-      date: Date.now(),
-    };
+    } = req.body;
 
-    const newOrder = new orderModel(orderData);
-    await newOrder.save();
+    // Stripe Checkout cancel hone par unpaid order delete karein
+    if (success === "false" && orderId) {
+      await orderModel.findOneAndDelete({
+        _id: orderId,
+        userId,
+        payment: false,
+      });
 
-    const option = {
-      amount: Number(amount) * 100,
-      currency: currency.toUpperCase(),
-      receipt: newOrder._id.toString(),
-    };
-    await razorpayInstance.orders.create(option, (error, order) => {
-      if (error) {
-        console.log(error);
-        return res.json({ success: false, message: error });
-      }
-      res.json({ success: true, order });
+      return res.json({
+        success: false,
+        message: "Payment was cancelled",
+      });
+    }
+
+    if (!sessionId) {
+      return res.status(400).json({
+        success: false,
+        message: "Stripe session ID is required",
+      });
+    }
+
+    // Actual payment status Stripe se retrieve karein
+    const session =
+      await stripe.checkout.sessions.retrieve(sessionId);
+
+    if (session.payment_status !== "paid") {
+      return res.status(400).json({
+        success: false,
+        message: "Payment has not been completed",
+      });
+    }
+
+    const sessionOrderId = session.metadata?.orderId;
+    const sessionUserId = session.metadata?.userId;
+
+    if (!sessionOrderId || !sessionUserId) {
+      return res.status(400).json({
+        success: false,
+        message: "Stripe session metadata is missing",
+      });
+    }
+
+    // Logged-in user aur Stripe session user same hone chahiye
+    if (String(sessionUserId) !== String(userId)) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized for this payment",
+      });
+    }
+
+    const updatedOrder =
+      await orderModel.findOneAndUpdate(
+        {
+          _id: sessionOrderId,
+          userId,
+        },
+        {
+          payment: true,
+        },
+        {
+          new: true,
+        }
+      );
+
+    if (!updatedOrder) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    await userModel.findByIdAndUpdate(userId, {
+      cartData: {},
+    });
+
+    return res.json({
+      success: true,
+      message: "Payment verified successfully",
     });
   } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: error.message });
+    console.error("Stripe verification error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
 
-const verifyRazorPay = async (req, res) => {
-  try {
-    const { userId, razorpay_order_id } = req.body;
-    const orderinfo = await razorpayInstance.orders.fetch(razorpay_order_id);
-    if (orderinfo.status === "paid") {
-      await orderModel.findByIdAndUpdate(orderinfo.receipt, { payment: true });
-      await userModel.findByIdAndUpdate(userId, { cartData: {} });
-      res.json({ success: true, message: "Payment Successful" });
-    } else {
-      res.json({ success: false, message: "Payment Failed" });
-    }
-  } catch (error) {
-    console.log(error);
-    res.json({ success: false, message: error.message });
-  }
-};
 // ----------------------
 // Get All Orders (Admin)
 // ----------------------
@@ -218,10 +257,8 @@ const updateStatus = async (req, res) => {
 export {
   placeOrder,
   placeOrderStripe,
-  placeOrderRozorPay,
   allOrders,
   userOrders,
   updateStatus,
   verifyStripe,
-  verifyRazorPay,
 };

@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Collaction from "./pages/Collaction";
 import About from "./pages/About";
@@ -17,16 +16,14 @@ import VerifyPage from "./pages/VerifyPage";
 import ForgetPassword from './pages/Forget'
 import { motion } from "framer-motion";
 import PageNotFound from "./pages/PageNotFound";
-import { ShopContext } from "./context/ShopContext";
 
 const App = () => {
   const bannerText = "Upto 50% OFF - Free Delivery all over Pakistan - Easy Return Policy";
-  const { Scroll, setScroll } = useContext(ShopContext)
   return (
     <div>
-      <div className="w-full overflow-hidden bg-green-700 text-white">
+      <div className="w-full overflow-hidden text-white bg-green-700">
         <motion.div
-          className="whitespace-nowrap py-2 px-4 inline-block"
+          className="inline-block px-4 py-2 whitespace-nowrap"
           initial={{ x: "300%" }}
           animate={{ x: "-100%" }}
           transition={{ repeat: Infinity, duration: 20, ease: "linear" }}

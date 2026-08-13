@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,22 +16,75 @@ const ShopContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [Scroll, setScroll] = useState(false);
 
-  useEffect(() => {
-    getProductsData();
-  }, []);
+
+    const backendURL = process.env.REACT_APP_BACKEND_URL;
+
   useEffect(() => {
     const localToken = localStorage.getItem("token");
 
     if (localToken && !token) {
       setToken(localToken);
     }
-  }, []);
+  }, [token]);
+
+  
+const getUserCart = useCallback(
+  async (authToken) => {
+    try {
+      const response = await axios.post(
+        `${backendURL}/api/cart/get`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        setCartItem(response.data.cartData || {});
+      } else {
+        toast.error(
+          response.data.message || "Unable to load cart"
+        );
+      }
+    } catch (error) {
+      if (error?.response?.status === 401) {
+        toast.error(
+          "Session expired. Please login again."
+        );
+
+        setToken("");
+        localStorage.removeItem("token");
+        navigate("/login");
+        return;
+      }
+
+      if (error?.code === "ERR_NETWORK") {
+        toast.error(
+          "Unable to connect to the server. Please check your internet connection or try again later."
+        );
+        return;
+      }
+
+      console.error("Cart fetch error:", error);
+
+      toast.error(
+        error?.response?.data?.message ||
+          error.message ||
+          "Unable to load cart"
+      );
+    }
+  },
+  [navigate,backendURL]
+);
 
   useEffect(() => {
     if (token) {
       getUserCart(token);
     }
-  }, [token]);
+  }, [token,getUserCart]);
+
 
   const addToCart = async (itemId, size = "default") => {
     if (!itemId) return;
@@ -121,59 +174,52 @@ const ShopContextProvider = ({ children }) => {
     return totalAmount;
   };
 
+
+useEffect(() => {
   const getProductsData = async () => {
-    setLoading(true)
+    setLoading(true);
+
     try {
-      const rersponed = await axios.get(backendURL + "/api/product/list");
-      if (rersponed.data.success) {
-        setProducts(rersponed.data.message);
-      } else {
-        toast.error(rersponed.data.message);
-      }
-    } catch (error) {
-      console.log(error);
-      if (error?.code === 'ERR_NETWORK') {
-        toast.error("Unable to connect to the server. Please check your internet connection or try again later.");
-        return;
-      }
-      toast.error(error.message);
-    } finally {
-      setLoading(false)
-    }
-  };
-  const getUserCart = async (token) => {
-    try {
-      const responed = await axios.post(
-        backendURL + "/api/cart/get",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      const response = await axios.get(
+        `${backendURL}/api/product/list`
       );
-      if (responed.data.success) {
-        setCartItem(responed.data.cartData);
+
+      if (response.data.success) {
+        setProducts(response.data.message || []);
+      } else {
+        toast.error(
+          response.data.message || "Failed to fetch products"
+        );
       }
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        toast.error("Session expired. Please login again.");
-        setToken("");
-        localStorage.removeItem("token");
-        navigate("/login");
+      console.error("Product fetch error:", error);
+
+      if (error?.code === "ERR_NETWORK") {
+        toast.error(
+          "Unable to connect to the server. Please check your internet connection or try again later."
+        );
+      } else {
+        toast.error(
+          error?.response?.data?.message ||
+            error.message ||
+            "Failed to fetch products"
+        );
       }
-      console.log(error);
-      if (error?.code === 'ERR_NETWORK') {
-        toast.error("Unable to connect to the server. Please check your internet connection or try again later.");
-        return;
-      }
-      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
+  getProductsData();
+}, [backendURL]);
+
+
+
+
+
   const currency = "Rs";
   const delivery_Fee = 10;
-  const backendURL = process.env.REACT_APP_BACKEND_URL;
+
 
   const value = {
     products,
@@ -195,7 +241,8 @@ const ShopContextProvider = ({ children }) => {
     setToken,
     currentState,
     setCurrentState,
-    Scroll, setScroll
+    Scroll, setScroll,
+    loading
   };
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -36,13 +36,13 @@ const Forget = () => {
 
     return (
         <div className="min-h-[80vh] flex flex-col items-center justify-center p-6 bg-gray-50">
-            <div className="max-w-md w-full bg-white shadow-md p-6 rounded-lg">
+            <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
 
-                <h2 className="text-2xl font-semibold text-gray-800 text-center mb-2">
+                <h2 className="mb-2 text-2xl font-semibold text-center text-gray-800">
                     Forgot Password
                 </h2>
 
-                <p className="text-center text-gray-600 text-sm mb-6">
+                <p className="mb-6 text-sm text-center text-gray-600">
                     Lost your password? Enter your email and we’ll check if it's in our records.
                 </p>
 
@@ -59,7 +59,7 @@ const Forget = () => {
 
                     <button
                         type="submit"
-                        className="bg-black text-white py-2 rounded hover:bg-gray-900 transition"
+                        className="py-2 text-white transition bg-black rounded hover:bg-gray-900"
                     >
                         Check Email
                     </button>

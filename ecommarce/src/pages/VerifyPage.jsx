@@ -1,24 +1,25 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 const VerifyPage = () => {
-  const { navigate, backendURL, token, setCartItem ,cartItem} = useContext(ShopContext);
+  const { navigate, backendURL, token, setCartItem } = useContext(ShopContext);
   const [searchParams] = useSearchParams();
 
   const success = searchParams.get("success");
   const orderId = searchParams.get("orderId");
+  const sessionId = searchParams.get("session_id");
 
   useEffect(() => {
     const verifyPayment = async () => {
       try {
-        if (!token || !orderId) return;
+        if (!token || (!sessionId && !orderId)) return;
 
         const response = await axios.post(
           backendURL + "/api/order/verifyStripe",
-          { success, orderId },
+          { sessionId, success, orderId },
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -28,22 +29,25 @@ const VerifyPage = () => {
 
         if (response.data.success) {
           setCartItem({});
-           console.log("Cart should now be empty:", cartItem); 
           toast.success("Payment Successful!");
           navigate("/order");
         } else {
-          toast.error("Payment Failed try Agian...");
+          toast.error(response.data.message || "Payment failed. Please try again.");
           navigate("/cart");
         }
       } catch (error) {
-        console.log(error);
-        toast.error(error.message);
+        console.error("Stripe verification error:", error);
+        toast.error(
+          error?.response?.data?.message ||
+            error.message ||
+            "Payment verification failed"
+        );
         navigate("/cart");
       }
     };
 
     verifyPayment();
-  }, [success, orderId, token]);
+  }, [sessionId, success, orderId, token, backendURL, navigate, setCartItem]);
 
   return <div>Verifying payment...</div>;
 };

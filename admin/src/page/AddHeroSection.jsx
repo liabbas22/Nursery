@@ -27,7 +27,7 @@ const AddHeroSection = () => {
                 preview: state?.image || null,
             });
         }
-    }, [state]);
+    }, [state,isEdit]);
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
@@ -87,17 +87,17 @@ const AddHeroSection = () => {
     };
 
     return (
-        <div className="min-h-screen py-6 px-4 sm:px-8 md:px-16 lg:px-24 bg-gray-50">
-            <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <div className="min-h-screen px-4 py-6 sm:px-8 md:px-16 lg:px-24 bg-gray-50">
+            <div className="max-w-2xl p-6 mx-auto bg-white rounded-lg shadow-md">
 
-                <h2 className="text-xl md:text-2xl font-semibold mb-4 text-gray-600">
+                <h2 className="mb-4 text-xl font-semibold text-gray-600 md:text-2xl">
                     {isEdit ? "Update Hero Section" : "Add Banner Section"}
                 </h2>
 
                 <form onSubmit={handleFormSubmit} className="flex flex-col gap-3">
 
                     <div>
-                        <label className="block text-gray-600 font-medium mb-1">Title</label>
+                        <label className="block mb-1 font-medium text-gray-600">Title</label>
                         <input
                             type="text"
                             name="title"
@@ -105,12 +105,12 @@ const AddHeroSection = () => {
                             onChange={handleChange}
                             value={formData.title}
                             required
-                            className="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-green-600"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-600"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-gray-600 font-medium mb-1">Sub Title</label>
+                        <label className="block mb-1 font-medium text-gray-600">Sub Title</label>
                         <input
                             type="text"
                             name="subtitle"
@@ -118,25 +118,25 @@ const AddHeroSection = () => {
                             onChange={handleChange}
                             value={formData.subtitle}
                             required
-                            className="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-green-600"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-600"
                         />
                     </div>
 
                     <div className="mb-4">
-                        <label className="block text-gray-700 font-semibold mb-2">Upload Image</label>
+                        <label className="block mb-2 font-semibold text-gray-700">Upload Image</label>
 
                         <div
-                            className="relative w-full h-52 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center bg-gray-50 cursor-pointer hover:bg-gray-100 transition-colors"
+                            className="relative flex items-center justify-center w-full transition-colors border-2 border-gray-300 border-dashed cursor-pointer h-52 rounded-xl bg-gray-50 hover:bg-gray-100"
                             onClick={() => document.getElementById("imageInput").click()}
                         >
                             {!formData.preview && (
-                                <span className="text-gray-500 text-sm">Click to upload image</span>
+                                <span className="text-sm text-gray-500">Click to upload image</span>
                             )}
                             {formData.preview && (
                                 <img
                                     src={formData.preview}
                                     alt="Preview"
-                                    className="absolute inset-0 w-full h-full object-cover rounded-xl"
+                                    className="absolute inset-0 object-cover w-full h-full rounded-xl"
                                 />
                             )}
                         </div>
@@ -153,7 +153,7 @@ const AddHeroSection = () => {
 
                     <button
                         type="submit"
-                        className="bg-green-800 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 ease-in-out"
+                        className="px-4 py-2 text-white transition-all duration-300 ease-in-out bg-green-800 rounded-md hover:bg-green-700"
                     >
                         {isEdit ? "Update Hero Section" : "Add Banner Section"}
                     </button>

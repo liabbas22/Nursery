@@ -1,5 +1,4 @@
 import React from "react";
-import { motion } from "framer-motion";
 
 import HeroSection from "../component/Herosection";
 import LastestCollection from "../component/LastestCollection";

@@ -30,6 +30,8 @@ const Herolist = () => {
                 const res = await axios.delete(`${backendURL}/api/hero/${id}`);
                 toast.dismiss();
                 toast.success("Banner is Deleted Successfully!");
+                console.log("Hero Section Delete:",res);
+                
                 fetchHeroData();
             } catch (error) {
                 toast.error(error?.response?.data?.message || "Something went wrong. Please try again.");
@@ -42,13 +44,13 @@ const Herolist = () => {
                 <div className="flex gap-3">
                     <button
                         onClick={confirmDelete}
-                        className="bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700 transition-all"
+                        className="px-3 py-1 text-white transition-all bg-red-600 rounded-md hover:bg-red-700"
                     >
                         Yes
                     </button>
                     <button
                         onClick={() => toast.dismiss()}
-                        className="bg-gray-400 text-white px-3 py-1 rounded-md hover:bg-gray-500 transition-all"
+                        className="px-3 py-1 text-white transition-all bg-gray-400 rounded-md hover:bg-gray-500"
                     >
                         No
                     </button>
@@ -69,41 +71,41 @@ const Herolist = () => {
     }
 
     return (
-        <div className="min-h-screen py-8 px-4 bg-gray-50">
-            <h2 className="text-2xl font-semibold text-gray-700 mb-6">Banner List</h2>
+        <div className="min-h-screen px-4 py-8 bg-gray-50">
+            <h2 className="mb-6 text-2xl font-semibold text-gray-700">Banner List</h2>
 
             {loading ? (
                 <div className="fixed inset-0 flex items-center justify-center bg-black/5 backdrop-blur-sm">
-                    <div className="w-10 h-10 border-4 border-blue-900 border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-10 h-10 border-4 border-blue-900 rounded-full border-t-transparent animate-spin"></div>
                 </div>
             ) : data.length === 0 ? (
-                <span className="text-gray-500 text-center w-full block mt-10">No banners available</span>
+                <span className="block w-full mt-10 text-center text-gray-500">No banners available</span>
             ) : (
                 <div className="flex flex-col gap-5">
                     {data.map((item) => (
                         <div
                             key={item._id}
-                            className="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all overflow-hidden"
+                            className="overflow-hidden transition-all bg-white border border-gray-200 shadow-sm rounded-xl hover:shadow-md"
                         >
                             <img
                                 src={`${item?.image}`}
                                 alt={item.title}
-                                className="w-full h-52 md:h-80 object-cover object-center rounded-t-xl"
+                                className="object-cover object-center w-full h-52 md:h-80 rounded-t-xl"
                             />
-                            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4">
+                            <div className="flex flex-col gap-4 p-4 md:flex-row md:items-center md:justify-between">
                                 <div className="flex-1">
                                     <h3 className="text-xl font-semibold text-gray-800">{item.title}</h3>
                                     <p className="text-gray-600">{item.subtitle}</p>
                                 </div>
                                 <div className="flex items-center gap-2 mt-3 md:mt-0">
                                     <button
-                                        className="text-green-600 hover:text-green-700 text-2xl transition"
+                                        className="text-2xl text-green-600 transition hover:text-green-700"
                                         title="Edit"
                                         onClick={() => handleUpdate(item)}>
                                         <MdEdit />
                                     </button>
                                     <button
-                                        className="text-red-500 hover:text-red-600 text-2xl transition"
+                                        className="text-2xl text-red-500 transition hover:text-red-600"
                                         title="Delete"
                                         onClick={() => handleDelete(item?._id)}
                                     >

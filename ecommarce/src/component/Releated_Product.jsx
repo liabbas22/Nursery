@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "../component/Title";
-import Product from "../pages/Product";
 import ProductItem from "./ProductItem";
 
 const Releated_Product = ({ category, subCategory }) => {
@@ -16,14 +15,14 @@ const Releated_Product = ({ category, subCategory }) => {
       );
     }
     setReleatedProduct(ProductCopy.slice(0, 5));
-  }, [products]);
+  }, [products,category,subCategory]);
 
   return (
     <div className="my-24">
-      <div className="text-3xl text-center py-2">
+      <div className="py-2 text-3xl text-center">
         <Title text1={"RELATED"} text2={"PRODUCTS"} />
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-y-6">
         {releatedProduct?.map((product, index) => (
           <div>
             <ProductItem

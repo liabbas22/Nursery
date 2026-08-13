@@ -21,45 +21,53 @@ const Collaction = () => {
         : [...prev, e.target.value]
     );
   };
-
-
+useEffect(() => {
   const applyFilters = () => {
     let list = [...products];
 
-    if (category.length) {
-      list = list.filter((item) => category.includes(item.category));
+    if (category.length > 0) {
+      list = list.filter((item) =>
+        category.includes(item.category)
+      );
     }
 
-
     if (search && showSearch) {
+      const normalizedSearch = search.toLowerCase();
+
       list = list.filter((item) =>
-        item.name.toLowerCase().includes(search.toLowerCase())
+        item.name
+          ?.toLowerCase()
+          .includes(normalizedSearch)
       );
     }
 
     if (sortType === "low-high") {
-      list.sort((a, b) => a.price - b.price);
+      list.sort((a, b) => Number(a.price) - Number(b.price));
     } else if (sortType === "high-low") {
-      list.sort((a, b) => b.price - a.price);
+      list.sort((a, b) => Number(b.price) - Number(a.price));
     } else {
-      list.sort((a, b) => b._id.localeCompare(a._id));
+      list.sort((a, b) =>
+        String(b._id).localeCompare(String(a._id))
+      );
     }
 
     setFilters(list);
     setLoading(false);
   };
 
-  useEffect(() => {
-    if (products.length > 0) {
-      applyFilters();
-    }
-  }, [products, category, search, showSearch, sortType]);
+  if (products.length > 0) {
+    applyFilters();
+  } else {
+    setFilters([]);
+    setLoading(false);
+  }
+}, [products, category, search, showSearch, sortType]);
 
   return (
-    <div className="flex flex-col sm:flex-row gap-1 md:gap-10 pt-10 border-t">
+    <div className="flex flex-col gap-1 pt-10 border-t sm:flex-row md:gap-10">
       <div className="min-w-60">
         <p
-          className="my-2 text-md md:text-xl flex items-center uppercase cursor-pointer gap-2"
+          className="flex items-center gap-2 my-2 uppercase cursor-pointer text-md md:text-xl"
           onClick={() => setShowFilter(!showFilter)}
         >
           Filters
@@ -85,7 +93,7 @@ const Collaction = () => {
       </div>
 
       <div className="flex-1">
-        <div className="flex items-center justify-between text-base sm:text-xl lg:text-2xl mb-4">
+        <div className="flex items-center justify-between mb-4 text-base sm:text-xl lg:text-2xl">
           <Title text1="ALL" text2=" COLLECTIONS" />
           <select
             className="border-2 border-gray-300 text-sm px-2 mt-[-10px]"
@@ -99,10 +107,10 @@ const Collaction = () => {
 
         {loading ? (
           <div className="flex justify-center py-20">
-            <div className="w-10 h-10 border-4 border-blue-900 border-t-white rounded-full animate-spin"></div>
+            <div className="w-10 h-10 border-4 border-blue-900 rounded-full border-t-white animate-spin"></div>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 gap-y-6">
             {filters.map((product, index) => (
               <motion.div
                 key={product._id}

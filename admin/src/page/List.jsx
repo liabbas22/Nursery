@@ -55,9 +55,9 @@ const List = ({ token }) => {
               console.log(error);
               toast.error(error.message);
             }
-          }} className="bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-500">Yes</button>
+          }} className="px-3 py-1 text-white bg-red-600 rounded-md hover:bg-red-500">Yes</button>
           <button onClick={() => toast.dismiss()}
-            className="bg-gray-300 text-white px-3 py-1 rounded-md hover:bg-gray-400">No</button>
+            className="px-3 py-1 text-white bg-gray-300 rounded-md hover:bg-gray-400">No</button>
         </div>
       </div>,
       { autoClose: false }
@@ -82,7 +82,7 @@ const List = ({ token }) => {
 
         {loading && (
           <div className="fixed inset-0 flex items-center justify-center bg-transparent">
-            <div className="w-10 h-10 border-4 border-blue-900 border-t-white rounded-full animate-spin"></div>
+            <div className="w-10 h-10 border-4 border-blue-900 rounded-full border-t-white animate-spin"></div>
           </div>
         )}
         {list?.map((item, index) => (
@@ -98,7 +98,7 @@ const List = ({ token }) => {
               {item.price}
             </p>
             <p
-              className="text-right md:text-center cursor-pointer text-lg"
+              className="text-lg text-right cursor-pointer md:text-center"
               onClick={() => removeProduct(item._id)}
             >
               X

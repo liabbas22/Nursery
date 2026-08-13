@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { ShopContext } from '../context/ShopContext';
 import Title from './Title';
 import ProductItem from './ProductItem';
@@ -7,12 +7,9 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination, Autoplay } from 'swiper/modules';
 import { motion } from 'framer-motion';
-
+ const categories = ["Cactus", "Herbs", "Tree"];
 const ProductCategory = () => {
   const { products } = useContext(ShopContext);
-
-  const categories = ["Cactus", "Herbs", "Tree"];
-
   const categoryProducts = useMemo(() => {
     if (!products.length) return {};
     const filtered = {};
@@ -24,7 +21,7 @@ const ProductCategory = () => {
       if (filteredProducts.length > 0) filtered[category] = filteredProducts;
     });
     return filtered;
-  }, [products]);
+  }, [products,]);
 
   const swiperConfig = {
     slidesPerView: 2,
@@ -52,14 +49,14 @@ const ProductCategory = () => {
         categoryProducts[category] && (
           <div key={category} className="mb-10">
             <motion.div
-              className="text-center py-8 text-2xl md:text-3xl"
+              className="py-8 text-2xl text-center md:text-3xl"
               initial={{ opacity: 0, x: -100 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1, ease: "easeOut" }}
             >
               <Title text1={category} text2="Latest Collection" />
-              <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-700">
+              <p className="w-3/4 m-auto text-xs text-gray-700 sm:text-sm md:text-base">
                 {categoryDescriptions[category]}
               </p>
             </motion.div>

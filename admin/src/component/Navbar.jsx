@@ -13,10 +13,7 @@ const Navbar = ({ setToken }) => {
         />
       </Link>
       <button
-        className="bg-gray-700 hover:bg-gray-800 text-white 
-             px-5 py-2 sm:px-7 sm:py-2 
-             rounded-full text-xs sm:text-sm 
-             transition duration-300"
+        className="px-5 py-2 text-xs text-white transition duration-300 bg-gray-700 rounded-full hover:bg-gray-800 sm:px-7 sm:py-2 sm:text-sm"
         onClick={() => {
           setToken("");
           localStorage.removeItem("token");

@@ -10,13 +10,11 @@ import cartRouter from "./routes/cartRouter.js";
 import orderRouter from "./routes/orderRouter.js";
 import contactRouter from "./routes/ContactRoutes.js";
 import HeroRouter from './routes/HeroSectionRouter.js';
-import path from "path";
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 4000;
-const __dirname = path.resolve();
 app.use(express.json());
 app.use(cors());
 
