@@ -16,8 +16,8 @@ const Footer = () => {
             <img src={assets.logo} alt="logo" className="w-24 " />
           </Link>
           <p className="w-full text-gray-600 md:w-2/3">
-            Bringing you the healthiest plants, premium gardening supplies,
-            and a nurturing shopping experience. Loved by plant enthusiasts
+            Bringing you the healthiest plants, premium gardening supplies, and
+            a nurturing shopping experience. Loved by plant enthusiasts
             everywhere — shop with confidence and grow your green paradise.
           </p>
         </div>
@@ -43,16 +43,24 @@ const Footer = () => {
         <div>
           <p className="mb-5 text-xl font-medium">Get in Touch</p>
           <ul className="flex flex-col gap-1 text-gray-600">
-            <li>+923149283153</li>
-            <li>aa1639987@gmail.com</li>
-            <li>Instagram</li>
+            <li>+923043134587</li>
+            <li>nurseryplant@gmail.com</li>
+            <li>
+              <a
+                href="https://www.instagram.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Instagram
+              </a>
+            </li>
           </ul>
         </div>
       </div>
 
       <hr className="border-gray-300" />
       <p className="py-5 text-xs text-center text-gray-600 sm:text-sm">
-        © 2025 Pure plants.com – All Rights Reserved.
+        © 2026 nurseryplants.com – All Rights Reserved.
       </p>
     </motion.div>
   );

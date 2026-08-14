@@ -4,7 +4,6 @@ import HeroSection from "../component/Herosection";
 import LastestCollection from "../component/LastestCollection";
 import BestSaller from "../component/BestSaller";
 import OurPolicy from "../component/OurPolicy";
-import NewsLetter from "../component/NewsLetter";
 import ProductCategory from "../component/ProductCategory";
 
 
@@ -16,7 +15,6 @@ const Home = () => {
       <BestSaller />,
       <ProductCategory />,
       <OurPolicy />,
-      <NewsLetter />,
     </div>
   );
 };

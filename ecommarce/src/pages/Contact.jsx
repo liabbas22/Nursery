@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import Title from "../component/Title";
-import NewsLetter from "../component/NewsLetter";
 import { assets } from "../assets/assets";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -80,15 +79,15 @@ const Contact = () => {
           className="w-full md:w-[480px]"
           initial={{ opacity: 0, x: -100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} />
         <motion.div className="flex flex-col items-start justify-center gap-6" initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} >
-          <b className="text-2xl font-semibold text-gray-600">Pure Plants</b>
+          <b className="text-2xl font-semibold text-gray-600">Nursery Plants</b>
           <p className="text-gray-500">
-            Near Makli Civil Hospital <br />
-            Suite 350, Thatta, Pakistan
+           The Nursery Plants Main Shaheed-e-Millat Rd, near Tipu Sultan Road<br />
+            opposite Amir Khusro Road, Cp & Berar Chs, Karachi,
           </p>
 
           <p className="text-gray-500">
-            Tel: (+92) 3040635922 <br />
-            Email: pureplants@gmail.com
+            Tel: (+92) 3043134587 <br />
+            Email: nurseryplants@gmail.com
           </p>
 
           <b className="text-2xl font-semibold text-gray-600">
@@ -224,7 +223,6 @@ const Contact = () => {
         )}
       </AnimatePresence>
 
-      <NewsLetter />
     </div>
   );
 };

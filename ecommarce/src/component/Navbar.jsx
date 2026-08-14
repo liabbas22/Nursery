@@ -152,16 +152,23 @@ const Navbar = () => {
               />
               <p>Back</p>
             </div>
-            {["Home", "Collection", "About", "Contact"].map((item) => (
-              <NavLink
-                key={item}
-                className="py-3 pl-6 uppercase border"
-                to={`/${item === "Home" ? "" : item.toLowerCase()}`}
-                onClick={() => setVisible(false)}
-              >
-                {item}
-              </NavLink>
-            ))}
+         {["Home", "Collection", "About", "Contact"].map((item) => (
+  <NavLink
+    key={item}
+    end={item === "Home"}
+    to={`/${item === "Home" ? "" : item.toLowerCase()}`}
+    onClick={() => setVisible(false)}
+    className={({ isActive }) =>
+      `py-4 pl-6 uppercase border-b transition-colors duration-200 ${
+        isActive
+          ? "bg-green-700 text-white font-medium border-green-700"
+          : "text-gray-600 hover:bg-green-50 hover:text-green-700"
+      }`
+    }
+  >
+    {item}
+  </NavLink>
+))}
           </div>
         </div>
       </div>

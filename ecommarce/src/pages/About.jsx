@@ -1,7 +1,6 @@
 import React from "react";
 import Title from "../component/Title";
 import { assets } from "../assets/assets";
-import NewsLetter from "../component/NewsLetter";
 import { motion } from "framer-motion";
 
 const About = () => {
@@ -32,7 +31,7 @@ const About = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <p>
-            Pure Plants Nursery was founded with a passion for greenery and a
+            Nursery Plants Nursery was founded with a passion for greenery and a
             desire to bring nature closer to your home and garden. Our journey
             began with the goal of offering high-quality plants that are healthy,
             vibrant, and easy to care for.
@@ -45,7 +44,7 @@ const About = () => {
           </p>
           <b className="text-gray-800">Our Mission</b>
           <p>
-            At Pure Plants Nursery, our mission is to make gardening accessible
+            At Nursery Plants Nursery, our mission is to make gardening accessible
             and enjoyable for everyone. We aim to provide not only quality
             plants but also guidance, tips, and inspiration to help you create
             your perfect green space.
@@ -86,7 +85,6 @@ const About = () => {
           </motion.div>
         ))}
       </div>
-      <NewsLetter />
     </div>
   );
 };

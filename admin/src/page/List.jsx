@@ -31,7 +31,7 @@ const List = ({ token }) => {
   const removeProduct = async (id) => {
     toast.info(
       <div className="flex flex-col gap-3">
-        <span>Are you sure you want to delete this application?</span>
+        <span>Are you sure you want to delete this Product?</span>
         <div className="flex gap-3">
           <button onClick={async () => {
             try {
